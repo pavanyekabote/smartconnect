@@ -41,14 +41,18 @@
                 echo "Could not create database";
             if($succ_count == 3)
                 $this->status = TRUE;
+     
         }
         
-        /** Store Data */
-        function storeData($a){
-
+        //Check User credentials
+        function getUserAuthToken($username, $password){
+            $query = "SELECT * from ".Constants::$DB_NAME.".".Constants::$DB_TABLES[0]." where username='".$username."' and password='".$password."'";
+            $res = $this->conn->query($query);
+            if($res->num_rows > 0){
+                return TRUE;
+            }
+            return FALSE;
         }
-
-
         function getPriorityOfDevice($devId,$socketNumber){
 
             $query = "SELECT sockStatus,priority FROM ".Constants::$DB_NAME.".".Constants::$DB_TABLES[2]." where  deviceId=".$devId." and sockNumber=".$socketNumber;   
@@ -77,6 +81,21 @@
                 }
             return $res;
        }
+
+       function getDeviceData($devId){
+            
+            $query = "SELECT * FROM ".Constants::$DB_NAME.".".Constants::$DB_TABLES[2]." where  deviceId=".$devId;
+            $res = $this->conn->query($query);
+            return $res->num_rows;
+       }
+
+       function updateStatusWithDevId($devId, $sockNumber, $sockStatus){
+            $query = "UPDATE ".Constants::$DB_NAME.".".Constants::$DB_TABLES[2]." SET sockStatus=".$sockStatus.",priority=1 WHERE deviceId=".$devId." AND sockNumber=".$sockNumber."";
+            if($this->conn->query($query) == TRUE){
+                return TRUE;
+            }
+            return FALSE;
+       }
     }
 
     class PSOfSockets{
@@ -86,5 +105,6 @@
             $this->priority  = $priority;
         }
     }
+
 
 ?>

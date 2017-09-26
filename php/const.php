@@ -2,18 +2,30 @@
     
     class Constants{
         
+        //Auth params
+        static $AUTH_USERNAME = 'usn';
+        static $AUTH_PASSWORD = 'pwd';
+
         //Request parameter name
-        static $REQ_FROM = "reqFrom";
+        static $REQ_TYPE = "reqType";
         static $REQ_DEVICE_ID = "reqDevId";
         static $REQ_STATUS_DATA = "reqStatusData";
         
-            
+        
         //Request Parameters if req from Device
-        static $REQ_FROM_DEVICE = 1;
+        static $REQ_TYPE_READ = 1; //Read
         
         //Request params if req from App
-        static $REQ_FROM_APP = 2;
+        static $REQ_TYPE_WRITE = 2; //Write
         
+        //Responses
+        static $RES_FAILED = "FAILED";
+        static $RES_OK = "OK";
+        static $RES_MESSAGE_SUCCESS = "SUCCESS";
+        static $RES_MESSAGE_FAILED = "ERROR OCCURED";
+        //Priority
+        static $PRIORITY_HIGH = 1;
+        static $PRIORITY_LOW = 0;
         //MySQL Connection 
         static  $DB_NAME = "smartconnect";
         static  $DB_SERVER = "localhost:3306";
